@@ -1,26 +1,38 @@
+.\"
+.\" Please keep file format as follows:
+.\" -- Lines should be no longer than 75 characters
+.\" -- All nested structures should be commented at their beginning and end
+.\" -- All codeblocks should be commented at their beginning and end
+.\" -- If the file contains a lot of formatting, keep paragraphs or other 
+.\"    logical parts separated by a commented out line and/or comment their
+.\"    beginnings and ends
+.\" 
+.\"  For vim users:
+.\" 
+.\"  au BufNewFile,BufRead *.mdoc set filetype=groff
+.\"  au BufNewFile,BufRead *.mdoc match ErrorMsg '\%>75v.\+'
+
 .Sh Anatomy of a Window
 
 .Nm
-puts a decorative border around most windows. This border
-consists of a bar on each side and a small L-shaped section on
-each corner. There is an additional top bar called the title-bar
-which is used to display the name of the window. In addition,
-there are up to 10 title-bar buttons. The top, side, and bottom
-bars are collectively known as the side-bars. The corner pieces
-are called the frame.
+puts a decorative border around most windows. This border consists of a bar
+on each side and a small L-shaped section on each corner. There is an 
+additional top bar called the title-bar which is used to display the name 
+of the window. In addition, there are up to 10 title-bar buttons. The top,
+side, and bottom bars are collectively known as the side-bars. The corner 
+pieces are called the frame.
 .Pp
-With the built-in minimal configuration, dragging mouse button 1
-in the frame or side-bars begins a resize operation on the window.
-Dragging mouse button 2 in the frame or side-bars begins a move
-operation. There are raise/lower operations bound to a single
-clicking on borders. Similarly for the window title.
+With the built-in minimal configuration, dragging mouse button 1 in the 
+frame or side-bars begins a resize operation on the window. Dragging mouse
+button 2 in the frame or side-bars begins a move operation. There are 
+raise/lower operations bound to a single clicking on borders. Similarly for
+the window title.
 .Pp
-Up to ten title-bar buttons may exist. Their use is completely
-user definable. One popular configuration uses one button on the
-left that is used to bring up a list of window options and two
-buttons on the right used to iconify and maximize the window.
-Another popular configuration adds a close button to the right.
-The number of title-bar buttons used depends on which ones have
-mouse actions bound to them. See the
+Up to ten title-bar buttons may exist. Their use is completely user 
+definable. One popular configuration uses one button on the left that is 
+used to bring up a list of window options and two buttons on the right used
+to iconify and maximize the window. Another popular configuration adds a 
+close button to the right. The number of title-bar buttons used depends on
+which ones have mouse actions bound to them. See the
 .Sx Mouse
 command.
