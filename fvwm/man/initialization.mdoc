@@ -1,0 +1,230 @@
+.\"
+.\" Please keep file format as follows:
+.\" -- Lines should be no longer than 75 characters
+.\" -- All nested structures should be commented at their beginning and end
+.\" -- All codeblocks should be commented at their beginning and end
+.\" -- If the file contains a lot of formatting, keep paragraphs or other 
+.\"    logical parts separated by a commented out line and/or comment their
+.\"    beginnings and ends
+.\" 
+.\"  For vim users:
+.\" 
+.\"  au BufNewFile,BufRead *.mdoc set filetype=groff
+.\"  au BufNewFile,BufRead *.mdoc match ErrorMsg '\%>75v.\+'
+.\"
+.Sh Initialization
+.Pp
+During initialization, 
+.Nm
+searches for a configuration file
+which describes key and button bindings, and many other
+things. The format of these files is described later. 
+.Nm
+first
+searches for configuration files using the command
+.\" BEGIN CODEBLOCK
+.Bd -literal -offset indent -compact
+Read config
+.\"END CODEBLOCK
+.Ed
+.Pp
+This looks for file
+.Pa config in 
+.Ev $FVWM_USERDIR
+and
+.Ev $FVWM_DATADIR
+directories, as described in
+.Sx Read
+. 
+If this fails more files are queried for backward
+compatibility. Here is the complete list of all file locations
+queried in the default installation (only the first found file
+is used):
+.Pp
+.\" BEGIN PRIMARY LIST OF PATHS
+.Bl -inset -compact
+.It Ev $HOME
+.It Pa /usr/local/share/fvwm/config
+.\" END PRIMARY LIST OF PATHS
+.El
+.Pp
+.\" BEGIN SECONDARY LIST OF PATHS
+.Bl -inset -compact
+.It Pa $HOME/.fvwm/.fvwm2rc
+.It Pa $HOME/.fvwm2rc
+.It Pa /usr/local/share/fvwm/.fvwm2rc
+.It Pa /usr/local/share/fvwm/system.fvwm2rc
+.It Pa /etc/system.fvwm2rc
+.\" END SECONDARY LIST OF PATHS
+.El
+.Pp
+Please note, the last 5 locations are not guaranteed to be
+supported in the future.
+.Pp
+If a configuration file is not found, the left mouse button, or
+.Sy Help
+or
+.Sy F1
+keys on the root window bring up menus and forms that can create
+a starting configuration file.
+.Pp
+.Nm 
+sets two environment variables which are inherited by its
+children. These are
+.Ev $DISPLAY
+which describes the display on which 
+.Nm
+is running.
+.Ev $DISPLAY
+may be
+.Em unix:0.0
+or
+.Em :0.0
+,
+which doesn't work too well when passed through ssh to another
+machine, so
+.Ev $HOSTDISPLAY
+is set to a network-ready description of the display.
+.Ev $HOSTDISPLAY
+always uses the TCP/IP transport protocol (even for a local
+connection) so
+.Ev $DISPLAY
+should be used for local connections, as it may use Unix-domain
+sockets, which are faster.
+.Pp
+If you want to start some applications or modules with 
+.Nm 
+, you
+can simply put
+.\" BEGIN CODEBLOCK
+.Bd -literal -offset indent -compact
+Exec app
+.\" END CODEBLOCK
+.Ed
+or
+.\" BEGIN CODEBLOCK
+.Bd -literal -offset indent -compact
+Module FvwmXxx
+.\" END CODEBLOCK
+.Ed
+into your
+.Pa config
+,
+but it is not recommended; do this only if you know what you are
+doing. It is usually important to start applications or modules
+after the entire config is read, because it contains styles or
+module configurations which can affect window appearance and
+functionality.
+.Pp
+The standard way to start applications or modules on 
+.Nm 
+'s start
+up is to add them to an initialization function (usually
+.Sy StartFunction
+or 
+.Sy InitFunction
+).
+This way they are only started after 
+.Nm
+finishes to read and
+execute
+.Pa config
+file.
+.Pp
+.Nm
+has three special functions for initialization:
+.Sy StartFunction
+,
+which is executed on startups and restarts;
+.Sy InitFunction
+and
+.Sy RestartFunction
+,
+which are executed during initialization and restarts
+(respectively) just after StartFunction. These functions may be
+customized in a user's
+.Pa config
+file using the
+.Sx AddToFunc
+command (described later) to start up modules, xterms, or whatever
+you'd like to have started by 
+.Nm
+.
+.Pp
+.Nm
+has also a special exit function:
+.Sy ExitFunction
+,
+executed when exiting or restarting before actually quitting.
+It could be used to explicitly kill modules, etc.
+.Pp
+If 
+.Nm
+is run under a session manager, functions
+.Sy SessionInitFunction
+and
+.Sy SessionRestartFunction
+are executed instead of InitFunction and RestartFunction.
+This helps to define the user's
+.Pa config
+file to be good for both running under a session manager and
+without it. Generally it is a bad idea to start xterms or other
+applications in 
+.Sy "Session*"
+functions. Also someone can decide to
+start different modules while running under a session manager or
+not. For the similar purposes
+.Sy SessionExitFunction
+is used instead of 
+.Sy ExitFunction.
+.Pp
+.\" BEGIN CODEBLOCK
+.Bd -literal -offset indent -compact
+DestroyFunc StartFunction
+AddToFunc StartFunction
+ + I Module FvwmPager * *
+ + I Module FvwmButtons
+
+DestroyFunc InitFunction
+AddToFunc InitFunction
+ + I Module FvwmBanner
+ + I Module FvwmTaskBar
+ + I Exec xsetroot -solid cyan
+ + I Exec xterm
+ + I Exec netscape
+
+DestroyFunc RestartFunction
+AddToFunc RestartFunction
+ + I Modulei FvwmTaskBar
+
+DestroyFunc SessionInitFunction
+AddToFunc SessionInitFunction
+ + I Module FvwmBanner
+
+DestroyFunc SessionRestartFunction
+AddToFunc SessionRestartFunction
+ + I Nop
+.\" END CODEBLOCK
+.Ed
+.Pp
+You do not need to define all special functions if some are empty.
+Also note, all these special functions may be emulated now using
+.Sy StartFunction
+and 
+.Sy ExitFunction
+, like this:
+.Pp
+.\" BEGIN CODEBLOCK
+.Bd -literal -offset indent -compact
+DestroyFunc StartFunction
+AddToFunc StartFunction
++ I Test (Init) Module FvwmBanner
++ I Module FvwmPager * *
++ I Test (Restart) Beep
+
+DestroyFunc ExitFunction
+AddToFunc ExitFunction
++ I Test (Quit) Echo Bye-bye
++ I KillModule MyBuggyModule
++ I Test (ToRestart) Beep
+.Ed
