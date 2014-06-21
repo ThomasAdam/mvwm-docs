@@ -16,12 +16,10 @@
 .Pp
 During initialization, 
 .Nm
-searches for a configuration file
-which describes key and button bindings, and many other
-things. The format of these files is described later. 
+searches for a configuration file which describes key and button bindings,
+and many other things. The format of these files is described later. 
 .Nm
-first
-searches for configuration files using the command
+first searches for configuration files using the command
 .\" BEGIN CODEBLOCK
 .Bd -literal -offset indent -compact
 Read config
@@ -36,10 +34,9 @@ and
 directories, as described in
 .Sx Read
 . 
-If this fails more files are queried for backward
-compatibility. Here is the complete list of all file locations
-queried in the default installation (only the first found file
-is used):
+If this fails more files are queried for backward compatibility. Here is 
+the complete list of all file locations queried in the default installation
+(only the first found file is used):
 .Pp
 .\" BEGIN PRIMARY LIST OF PATHS
 .Bl -inset -compact
@@ -58,19 +55,19 @@ is used):
 .\" END SECONDARY LIST OF PATHS
 .El
 .Pp
-Please note, the last 5 locations are not guaranteed to be
-supported in the future.
+Please note, the last 5 locations are not guaranteed to be supported in the
+future.
 .Pp
 If a configuration file is not found, the left mouse button, or
 .Sy Help
 or
 .Sy F1
-keys on the root window bring up menus and forms that can create
-a starting configuration file.
+keys on the root window bring up menus and forms that can create a starting
+configuration file.
 .Pp
 .Nm 
-sets two environment variables which are inherited by its
-children. These are
+sets two environment variables which are inherited by its children. These 
+are
 .Ev $DISPLAY
 which describes the display on which 
 .Nm
@@ -81,16 +78,15 @@ may be
 or
 .Em :0.0
 ,
-which doesn't work too well when passed through ssh to another
-machine, so
+which doesn't work too well when passed through ssh to another machine, so
 .Ev $HOSTDISPLAY
 is set to a network-ready description of the display.
 .Ev $HOSTDISPLAY
 always uses the TCP/IP transport protocol (even for a local
 connection) so
 .Ev $DISPLAY
-should be used for local connections, as it may use Unix-domain
-sockets, which are faster.
+should be used for local connections, as it may use Unix-domain sockets, 
+which are faster.
 .Pp
 If you want to start some applications or modules with 
 .Nm 
@@ -110,11 +106,10 @@ Module FvwmXxx
 into your
 .Pa config
 ,
-but it is not recommended; do this only if you know what you are
-doing. It is usually important to start applications or modules
-after the entire config is read, because it contains styles or
-module configurations which can affect window appearance and
-functionality.
+but it is not recommended; do this only if you know what you are doing. It 
+is usually important to start applications or modules after the entire 
+config is read, because it contains styles or module configurations which 
+can affect window appearance and functionality.
 .Pp
 The standard way to start applications or modules on 
 .Nm 
@@ -140,14 +135,13 @@ which is executed on startups and restarts;
 and
 .Sy RestartFunction
 ,
-which are executed during initialization and restarts
-(respectively) just after StartFunction. These functions may be
-customized in a user's
+which are executed during initialization and restarts (respectively) just 
+after StartFunction. These functions may be customized in a user's
 .Pa config
 file using the
 .Sx AddToFunc
-command (described later) to start up modules, xterms, or whatever
-you'd like to have started by 
+command (described later) to start up modules, xterms, or whatever you'd 
+like to have started by 
 .Nm
 .
 .Pp
@@ -155,8 +149,8 @@ you'd like to have started by
 has also a special exit function:
 .Sy ExitFunction
 ,
-executed when exiting or restarting before actually quitting.
-It could be used to explicitly kill modules, etc.
+executed when exiting or restarting before actually quitting. It could be 
+used to explicitly kill modules, etc.
 .Pp
 If 
 .Nm
@@ -171,9 +165,8 @@ file to be good for both running under a session manager and
 without it. Generally it is a bad idea to start xterms or other
 applications in 
 .Sy "Session*"
-functions. Also someone can decide to
-start different modules while running under a session manager or
-not. For the similar purposes
+functions. Also someone can decide to start different modules while running
+under a session manager ornot. For the similar purposes
 .Sy SessionExitFunction
 is used instead of 
 .Sy ExitFunction.
@@ -207,8 +200,8 @@ AddToFunc SessionRestartFunction
 .\" END CODEBLOCK
 .Ed
 .Pp
-You do not need to define all special functions if some are empty.
-Also note, all these special functions may be emulated now using
+You do not need to define all special functions if some are empty. Also 
+note, all these special functions may be emulated now using
 .Sy StartFunction
 and 
 .Sy ExitFunction
