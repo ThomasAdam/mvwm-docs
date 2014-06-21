@@ -1,0 +1,83 @@
+.\"
+.\" Please keep file format as follows:
+.\" -- Lines should be no longer than 75 characters
+.\" -- All nested structures should be commented at their beginning and end
+.\" -- All codeblocks should be commented at their beginning and end
+.\" -- If the file contains a lot of formatting, keep paragraphs or other 
+.\"    logical parts separated by a commented out line and/or comment their
+.\"    beginnings and ends
+.\" 
+.\"  For vim users:
+.\" 
+.\"  au BufNewFile,BufRead *.mdoc set filetype=groff
+.\"  au BufNewFile,BufRead *.mdoc match ErrorMsg '\%>75v.\+'
+
+.Sh Xinerama Support
+.Pp
+Fvwm supports the Xinerama extension of newer X servers which is similar to
+multi head support (multiple screens) but allows one to move windows 
+between screens. If Xinerama support has been compiled into fvwm, it is 
+used whenever fvwm runs on an X server that supports and uses multiple 
+screens via Xinerama. Without this option, the whole desktop is treated as
+one big screen. For example, menus might pop up right between two screens. 
+The 
+.Sx EdgeResistance
+option
+of the 
+.Sx Style
+command command allows for specifying an explicit resistance value for 
+moving windows over the screen edge between two Xinerama screens. Xinerama
+support can be enabled or disabled on the fly or from the configuration 
+file with the
+.Sx Xinerama
+command. Many modules and commands work nicely with Xinerama displays.
+.Pp
+Whenever a geometry in the usual X format can be supplied, fvwm's Xinerama 
+extension allows for specifying a screen in addition to the geometry (or 
+even the screen alone). To do this, a '@' is added to the end of the 
+geometry string followed by either the screen number or a letter. A number
+is taken as the number of the Xinerama screen to be used (as configured in 
+the X server). The letter can be one of 'g' for the global screen (the 
+rectangle that encloses all Xinerama screens), 'p' for the primary screen (
+see below), 'c' for the current screen (the one that currently contains the
+pointer). If the X server does not support Xinerama or only one screen is 
+used, the screen bit is ignored.
+.\" BEGIN CODEBLOCK
+.Bd -literal -offset indent -compact
+Style * IconBox 64x300-0-0@p
+.\" END CODEBLOCK
+.Ed
+.Pp
+Xinerama support can be configured to use a primary screen. Fvwm can be 
+configured to place new windows and icons on this screen. The primary 
+screen is screen 0 by default but can be changed with the
+.Sx XineramaPrimaryScreen
+command.
+.Pp
+Xinerama support was designed to work out of the box with the same 
+configuration file that would work on a single screen. It may not perform 
+very well if the involved screens use different screen resolutions. In this
+situation, windows may get stuck in the portion of the whole desktop that 
+belongs to neither screen. When this happens, the windows or icons can be 
+retrieved with the command
+.\" BEGIN CODEBLOCK
+.Bd -literal -offset indent -compact
+All MoveToScreen
+.\" END CODEBLOCK
+that can be entered in an 
+.Sx FvwmConsole
+window or with 
+.Sx FvwmCommand
+\.
+.Pp
+For multi-screen implementations other than Xinerama, such as Single 
+Logical Screen, it is possible to simulate a Xinerama configuration if the
+total screen seen by fvwm is made up of equal sized monitors in a 
+rectangular grid. The commands
+.Sx
+XineramaSls
+, 
+.Sx XineramaSlsSize
+and
+.Sx
+are used to configure this feature.
