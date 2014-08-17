@@ -1,0 +1,257 @@
+.Sh ICONS AND IMAGES
+.Nm
+can load .xbm, .xpm, .png and .svg images. 
+.Sy XBM 
+images are monochrome.  
+.Nm
+can always display 
+.Sy XBM 
+files.
+.Sy XPM
+and 
+.Sy PNG
+formats are color images.
+.Sy SVG 
+is a vector graphics image format. Compile-time options determine whether 
+.Nm 
+can display
+.Sy XPM
+,
+.Sy PNG
+ or
+.Sy SVG
+icons and images. See the 
+.Pa INSTALL.fvwm
+file for more information.
+.Pp
+.\" TODO: Create a link to INSTALL.fvwm file?
+The related 
+.Sy SHAPE
+compile-time option can make fvwm display spiffy shaped icons.
+.Pp
+.Ss SVG rendering options
+.Pp
+SVG images are generated from (XML) text files.  A really simple SVG file 
+might look something like this:
+
+.\" BEGIN CODEBLOCK
+.Bd -literal -offset indent -compact
+<svg width="120" height="80">
+	&lt;rect fill="red"     width="40" height="40"  x="0"   y="0"  />
+	&lt;rect fill="lime"    width="40" height="40"  x="40"  y="0"  />
+	&lt;rect fill="blue"    width="40" height="40"  x="80"  y="0"  />
+	&lt;rect fill="cyan"    width="40" height="40"  x="0"   y="40" />
+	&lt;rect fill="magenta" width="40" height="40"  x="40"  y="40" />
+	&lt;rect fill="yellow"  width="40" height="40"  x="80"  y="40" />
+</svg>
+.\" END CODEBLOCK
+.Ed
+By default, SVG images are rendered as the image creator intended them to. 
+But since SVG is a vector graphics format, the images can be rendered at 
+any chosen size and rotation, e.g. making it possible to use the same icon 
+file rendered at diffrent sizes for the
+.Sx Icon
+and 
+.Sx MiniIcon
+styles.
+.Pp
+The rendering options are specified as a string appended to the SVG 
+filename as follows:
+
+.\" BEGIN CODEBLOCK
+.Bd -literal -offset indent -compact
+image.svg:[!] [(1) size] [(2) position] [(3) rotation] [(4) scale] ...
+
+(1) [-]width{x}[-]height
+
+(2) { - | + }xpos{ - | + }ypos
+
+(3) @[-]angle
+
+(4) { * | / }[-]factor[ x | y ]
+.\" END CODEBLOCK
+.Ed
+.Pp
+The option string always starts with a colon (
+.Sy :
+)
+to separate it from the filename.  An empty option string can skip this
+colon, but it might still be a good idea to include it to prevent ambiguity
+if the filename contains any colon.
+.\" BEGIN CODEBLOCK
+.Bd -literal -offset indent -compact
+filename_without_colon.svg
+filename:with:colon.svg:
+.\" END CODEBLOCK
+.Ed
+.Pp
+An exclamation point (
+.Sy!
+) transposes the entire final
+image (including the rendering area), i.e. all the horizontal and all the 
+vertical coordinates are swapped with each other.
+.\" BEGIN CODEBLOCK
+.Bd -literal -offset indent -compact
+image.svg:!
+.\" END CODEBLOCK
+.Ed
+.Pp
+.Em width
+and
+.Em height
+specifies the dimensions of the rendering area in pixels, i.e. the 
+dimensions of the resulting image.  The actual image is fitted to fill
+the entire rendering area.
+.Pp
+.\" BEGIN CODEBLOCK
+.Bd -literal -offset indent -compact
+image.svg:60x60
+.\" END CODEBLOCK
+.Ed
+.Pp
+Use a 
+.Em width
+or
+.Em height
+value of 0 to keep the aspect ratio.
+.Pp
+.\" BEGIN CODEBLOCK
+.Bd -literal -offset indent -compact
+image.svg:0x60
+image.svg:60x0
+.\" END CODEBLOCK
+.Ed
+.Pp
+A
+.Sy -
+before 
+.Em width
+mirrors the rendering area horizontally.
+.Pp
+.\" BEGIN CODEBLOCK
+.Bd -literal -offset indent -compact
+image.svg:-0x0
+.\" END CODEBLOCK
+.Ed
+.Pp
+A '
+.Sy-
+\' before 
+.Em height
+mirrors the rendering area vertically.
+.Pp
+.\" BEGIN CODEBLOCK
+.Bd -literal -offset indent -compact
+image.svg:0x-0
+.\" END CODEBLOCK
+.Ed
+.Pp
+.Em xpos
+and
+.Em ypos
+specifies a translation of the image in pixels.  A positive
+.Em xpos
+value moves the image to the right.  A
+positive 
+.Em ypos
+value moves it down.  Moving
+it partially outside of the rendering area results in a cropped
+image.
+.Pp
+
+.\" BEGIN CODEBLOCK
+.Bd -literal -offset indent -compact
+image.svg:-30-0
+image.svg:-0+10
+image.svg:-30+10
+.\" END CODEBLOCK
+.Ed
+.Pp
+.Em angle
+specifies a rotation around the actual
+image center in degrees. This might result in a cropped image.  A positive 
+value rotates the image clockwise.  Floating point values are recognized.
+.Pp
+.\" BEGIN CODEBLOCK
+.Bd -literal -offset indent -compact
+image.svg:@180
+image.svg:@-90
+image.svg:@30
+image.svg:@57.3
+.\" END CODEBLOCK
+.Ed
+.Pp
+.Em factor
+specifes a scaling of the actual image (not the rendering area). Scaling it
+up results in a cropped image.  Floting point values are recognized.  
+Division by zero is ignored.  If 
+.Em factor 
+is directly followed
+by a '
+.Sy x
+' or a '
+.Sy y
+', the scaling
+is horizontal or vertical respectively.  Otherwise the scaling is uniform.
+.Pp
+image.svg:*2
+image.svg:/2
+image.svg:/3x
+image.svg:/2y
+.\" END CODEBLOCK
+.Ed
+.Pp
+Scaling down a translated or rotated image can prevent cropping.
+.Pp
+.\" BEGIN CODEBLOCK
+.Bd -literal -offset indent -compact
+image.svg:@30*0.6
+.\" END CODEBLOCK
+.Ed
+.Pp
+Repeated usage of translation, rotation, and scaling is allowed.
+.Pp
+Translation and rotation are additive.  Scaling is multiplicative.
+.Pp
+.\" BEGIN CODEBLOCK
+.Bd -literal -offset indent -compact
+image.svg:*2/3
+image.svg:/3x/2y
+.\" END CODEBLOCK
+.Ed
+.Pp
+When combining affine transformations, the scaling is always done first, 
+then the rotation, and finally the translation.
+.Pp
+.\" BEGIN CODEBLOCK
+.Bd -literal -offset indent -compact
+image.svg:-30+10@30/3x/2y
+.\" END CODEBLOCK
+.Ed
+.Pp
+Use a negative scale 
+.Em factor
+to mirror the actual image.
+.\" BEGIN CODEBLOCK
+.Bd -literal -offset indent -compact
+image.svg:-30+10@30/-3x/2y
+.\" END CODEBLOCK
+.Ed
+.Pp
+Mirroring of the rendering area is done after any scaling, rotation or 
+translation of the image.
+.Pp
+.\" BEGIN CODEBLOCK
+.Bd -literal -offset indent -compact
+image.svg:-0x0-30+10@30/3x/2y
+.\" END CODEBLOCK
+.Ed
+.Pp
+Transposing is done last of all, after everything else.
+.Pp
+.\" BEGIN CODEBLOCK
+.Bd -literal -offset indent -compact
+image.svg:!-0x0-30+10@30/3x/2y
+.\" END CODEBLOCK
+.Ed
+.Pp

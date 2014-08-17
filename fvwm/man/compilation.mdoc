@@ -12,23 +12,9 @@
 .\"  au BufNewFile,BufRead *.mdoc set filetype=groff
 .\"  au BufNewFile,BufRead *.mdoc match ErrorMsg '\%>75v.\+'
 .\"
-.Dd $Mdocdate$ 
-.Dt FVWM
-.Os
-.Sh NAME
-.Nm fvwm - F? Virtual Window Manager for X11
-.Pp
-TODO include sections as they come :3
-.Pp
-TODO include sections as they come :3
-.Pp
-.so man/synopsis.mdoc
-.so man/description.mdoc
-.so man/options.mdoc
-.so man/window_anatomy.mdoc
-.so man/virtual_desktop.mdoc
-.so man/multiscreen.mdoc
-.so man/xinerama.mdoc
-.so man/initialization.mdoc
-.so man/compilation.mdoc
-.so man/images.mdoc
+.Sh COMPILATION OPTIONS
+Fvwm has a number of compile-time options.  If you have trouble using a 
+certain command or feature, check to see if support for it was included at
+compile time.  Optional features are described in the 
+.Pa config.h
+file that is generated during compilation.
