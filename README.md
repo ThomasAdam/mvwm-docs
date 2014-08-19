@@ -18,4 +18,7 @@ dictionary:
 section:
   - header - .Sh
   - link   - .Sx
+
+random:
+  - filepath - .Pa
 ```

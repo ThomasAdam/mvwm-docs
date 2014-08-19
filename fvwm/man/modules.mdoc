@@ -1,0 +1,65 @@
+.\"
+.\" Please keep file format as follows:
+.\" -- Lines should be no longer than 75 characters
+.\" -- All nested structures should be commented at their beginning and end
+.\" -- All codeblocks should be commented at their beginning and end
+.\" -- If the file contains a lot of formatting, keep paragraphs or other 
+.\"    logical parts separated by a commented out line and/or comment their
+.\"    beginnings and ends
+.\" 
+.\"  For vim users:
+.\" 
+.\"  au BufNewFile,BufRead *.mdoc set filetype=groff
+.\"  au BufNewFile,BufRead *.mdoc match ErrorMsg '\%>75v.\+'
+.\"
+.Sh MODULES
+A module is a separate program which runs as a separate Unix process but 
+transmits commands to 
+.Nm 
+to execute. Users can write their own modules to do any weird or bizarre 
+manipulations without bloating or affecting the integrity of 
+.Nm 
+itself.
+.Pp
+Modules must be spawned by 
+.Nm 
+so that it can set up two pipes for 
+.Nm 
+and the module to communicate with. The pipes are already open for the 
+module when it starts and the file descriptors for the pipes are provided 
+as command line arguments.
+.Pp
+Modules can be spawned by 
+.Nm 
+at any time during the X session by use of the
+.Sx Module
+command. Modules can exist for the duration of the X session, or can 
+perform a single task and exit. If the module is still active when 
+.Nm 
+is told to quit, then 
+.Nm 
+closes the communication pipes and waits to receive a SIGCHLD from the 
+module, indicating that it has detected the pipe closure and has exited. 
+If modules fail to detect the pipe closure 
+.Nm 
+exits after approximately 30 seconds anyway. The number of simultaneously 
+executing modules is limited by the operating system's maximum number of 
+simultaneously open files, usually between 60 and 256.
+.Pp
+Modules simply transmit commands to the 
+.Nm 
+
+.Nm 
+command engine. Commands are formatted just as in the case of a mouse 
+binding in the
+.Pa config
+setup file. Certain auxiliary information is also transmitted, as in the 
+sample module
+.Sx FvwmButtons
+\.
+.Pp
+Please refer to the
+.Sx Module Commands
+section for details.
+.Pp
+
