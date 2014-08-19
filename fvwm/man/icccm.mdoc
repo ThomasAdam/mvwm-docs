@@ -1,0 +1,98 @@
+.\"
+.\" Please keep file format as follows:
+.\" -- Lines should be no longer than 75 characters
+.\" -- All nested structures should be commented at their beginning and end
+.\" -- All codeblocks should be commented at their beginning and end
+.\" -- If the file contains a lot of formatting, keep paragraphs or other 
+.\"    logical parts separated by a commented out line and/or comment their
+.\"    beginnings and ends
+.\" 
+.\"  For vim users:
+.\" 
+.\"  au BufNewFile,BufRead *.mdoc set filetype=groff
+.\"  au BufNewFile,BufRead *.mdoc match ErrorMsg '\%>75v.\+'
+.\"
+.Sh ICCCM COMPLIANCE
+
+.Nm
+attempts to be
+.Sy ICCCM
+2.0 compliant. Check http://tronche.com/gui/x/icccm/ for more info. In 
+addition,
+.Sy ICCCM
+states that it should be possible for applications to receive any 
+keystroke, which is not consistent with the keyboard shortcut approach used
+in 
+.Nm
+and most other window managers. In particular you cannot have the 
+same keyboard shortcuts working with your 
+.Nm
+and another 
+.Nm
+running within Xnest (a nested X server running in a window). The same 
+problem exists with mouse bindings.
+.Pp
+The
+.Sy ICCCM
+states that windows possessing the property
+.Qo 
+WM_HINTS(WM_HINTS): 
+Client accepts input or input focus: False
+.Qc
+should not be given the keyboard input focus by the window manager. These 
+windows can take the input focus by themselves, however. A number of 
+applications set this property, and yet expect the window manager to give 
+them the keyboard focus anyway, so 
+.Nm
+provides a window style,
+.Sx
+\,
+which allows 
+.Nm
+to overlook this
+.Sy ICCCM
+rule. Even with this window style it is not guaranteed that the
+application accepts focus.
+.Pp
+The differences between
+.Sy ICCCM
+1.1 and 2.0 include the ability to take over from a running
+.Sy ICCCM
+2.0 compliant window manager; thus
+.\" BEGIN CODEBLOCK
+.Bd -literal -offset indent -compact
+.\" END CODEBLOCK
+.Ed
+resembles the
+.Sx Restart
+command. It is not exactly the same, since killing the previously running 
+wm may terminate your X session, if the wm was started as the last client 
+in your
+.Pa .Xclients 
+or 
+.Pa .Xsession
+file.
+.Pp
+Further additions are support for client-side colormap
+installation (see the
+.Sy ICCCM
+for details) and the urgency hint. Clients can set this hint in the WM_
+HINTS property of their window and expect the window manager to attract the
+user's attention to the window. 
+.Nm
+has two re-definable functions for 
+this purpose, "UrgencyFunc" and "UrgencyDoneFunc", which are executed when 
+the flag is set/cleared. Their default definitions are:
+.Pp
+.\" BEGIN CODEBLOCK
+.Bd -literal -offset indent -compact
+XTerm*Page: 3 2 1
+AddToFunc UrgencyFunc
++ I Iconify off
++ I FlipFocus
++ I Raise
++ I WarpToWindow 5p 5p
+AddToFunc UrgencyDoneFunc
++ I Nop
+.\" END CODEBLOCK
+.Ed
