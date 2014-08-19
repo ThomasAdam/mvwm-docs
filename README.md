@@ -1,6 +1,5 @@
-## Formatting
+```## Formatting
 
-``
 Please keep file format as follows:
    -- Lines should be no longer than 75 characters
    -- All nested structures should be commented at their beginning and end
@@ -14,4 +13,8 @@ For vim users:
 au BufNewFile,BufRead *.mdoc set filetype=groff
 au BufNewFile,BufRead *.mdoc match ErrorMsg '\%>75v.\+'
 
-``
+dictionary:
+section:
+  - header - .Sh
+  - link   - .Sx
+```
