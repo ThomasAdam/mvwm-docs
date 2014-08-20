@@ -12,27 +12,13 @@
 .\"  au BufNewFile,BufRead *.mdoc set filetype=groff
 .\"  au BufNewFile,BufRead *.mdoc match ErrorMsg '\%>75v.\+'
 .\"
-.Dd $Mdocdate$ 
-.Dt FVWM
-.Os
-.Sh NAME
-.Nm fvwm - F? Virtual Window Manager for X11
-.Pp
-TODO include sections as they come :3
-.Pp
-TODO include sections as they come :3
-.Pp
-.so man/synopsis.mdoc
-.so man/description.mdoc
-.so man/options.mdoc
-.so man/window_anatomy.mdoc
-.so man/virtual_desktop.mdoc
-.so man/multiscreen.mdoc
-.so man/xinerama.mdoc
-.so man/initialization.mdoc
-.so man/compilation.mdoc
-.so man/images.mdoc
-.so man/modules.mdoc
-.so man/icccm.mdoc
-.so man/ewmh.mdoc
-.so man/mwm.mdoc
+.Sx MWM COMPATIBILITY
+Fvwm provides options to emulate Motif Window Manager (Mwm) as well as 
+possible. Please refer to the
+.Sx Emulate
+command as well as to the Mwm specific options of the
+.Sx Style
+and
+.Sx MenuStyle
+commands for details.
+
