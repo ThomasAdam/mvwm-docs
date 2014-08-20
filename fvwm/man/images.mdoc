@@ -12,7 +12,8 @@ and
 .Sy PNG
 formats are color images.
 .Sy SVG 
-is a vector graphics image format. Compile-time options determine whether 
+is a vector graphics image format.
+Compile-time options determine whether 
 .Nm 
 can display
 .Sy XPM
@@ -31,8 +32,8 @@ compile-time option can make fvwm display spiffy shaped icons.
 .Pp
 .Ss SVG rendering options
 .Pp
-SVG images are generated from (XML) text files.  A really simple SVG file 
-might look something like this:
+SVG images are generated from (XML) text files.
+A really simple SVG file might look something like this:
 
 .\" BEGIN CODEBLOCK
 .Bd -literal -offset indent -compact
@@ -75,9 +76,9 @@ image.svg:[!] [(1) size] [(2) position] [(3) rotation] [(4) scale] ...
 The option string always starts with a colon (
 .Sy :
 )
-to separate it from the filename.  An empty option string can skip this
-colon, but it might still be a good idea to include it to prevent ambiguity
-if the filename contains any colon.
+to separate it from the filename.
+An empty option string can skip this colon, but it might still be a good
+idea to include it to prevent ambiguity if the filename contains any colon.
 .\" BEGIN CODEBLOCK
 .Bd -literal -offset indent -compact
 filename_without_colon.svg
@@ -100,8 +101,8 @@ image.svg:!
 and
 .Em height
 specifies the dimensions of the rendering area in pixels, i.e. the 
-dimensions of the resulting image.  The actual image is fitted to fill
-the entire rendering area.
+dimensions of the resulting image.
+The actual image is fitted to fill the entire rendering area.
 .Pp
 .\" BEGIN CODEBLOCK
 .Bd -literal -offset indent -compact
@@ -149,14 +150,14 @@ image.svg:0x-0
 .Em xpos
 and
 .Em ypos
-specifies a translation of the image in pixels.  A positive
+specifies a translation of the image in pixels.
+A positive
 .Em xpos
-value moves the image to the right.  A
-positive 
+value moves the image to the right.
+A positive 
 .Em ypos
-value moves it down.  Moving
-it partially outside of the rendering area results in a cropped
-image.
+value moves it down.
+Moving it partially outside of the rendering area results in a cropped image.
 .Pp
 
 .\" BEGIN CODEBLOCK
@@ -169,8 +170,10 @@ image.svg:-30+10
 .Pp
 .Em angle
 specifies a rotation around the actual
-image center in degrees. This might result in a cropped image.  A positive 
-value rotates the image clockwise.  Floating point values are recognized.
+image center in degrees.
+This might result in a cropped image.
+A positive  value rotates the image clockwise.
+Floating point values are recognized.
 .Pp
 .\" BEGIN CODEBLOCK
 .Bd -literal -offset indent -compact
@@ -182,17 +185,19 @@ image.svg:@57.3
 .Ed
 .Pp
 .Em factor
-specifes a scaling of the actual image (not the rendering area). Scaling it
-up results in a cropped image.  Floting point values are recognized.  
-Division by zero is ignored.  If 
+specifes a scaling of the actual image (not the rendering area).
+Scaling it up results in a cropped image.
+Floting point values are recognized.  
+Division by zero is ignored.
+If 
 .Em factor 
-is directly followed
-by a '
+is directly followedby a '
 .Sy x
 ' or a '
 .Sy y
 ', the scaling
-is horizontal or vertical respectively.  Otherwise the scaling is uniform.
+is horizontal or vertical respectively.
+Otherwise the scaling is uniform.
 .Pp
 image.svg:*2
 image.svg:/2
@@ -211,7 +216,8 @@ image.svg:@30*0.6
 .Pp
 Repeated usage of translation, rotation, and scaling is allowed.
 .Pp
-Translation and rotation are additive.  Scaling is multiplicative.
+Translation and rotation are additive.
+Scaling is multiplicative.
 .Pp
 .\" BEGIN CODEBLOCK
 .Bd -literal -offset indent -compact
@@ -220,7 +226,7 @@ image.svg:/3x/2y
 .\" END CODEBLOCK
 .Ed
 .Pp
-When combining affine transformations, the scaling is always done first, 
+When combining affine transformations, the scaling is always done first,
 then the rotation, and finally the translation.
 .Pp
 .\" BEGIN CODEBLOCK
@@ -229,7 +235,7 @@ image.svg:-30+10@30/3x/2y
 .\" END CODEBLOCK
 .Ed
 .Pp
-Use a negative scale 
+Use a negative scale
 .Em factor
 to mirror the actual image.
 .\" BEGIN CODEBLOCK

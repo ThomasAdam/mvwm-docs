@@ -25,16 +25,17 @@ Modules must be spawned by
 .Nm 
 so that it can set up two pipes for 
 .Nm 
-and the module to communicate with. The pipes are already open for the 
-module when it starts and the file descriptors for the pipes are provided 
-as command line arguments.
+and the module to communicate with.
+The pipes are already open for the module when it starts and the file
+descriptors for the pipes are provided as command line arguments.
 .Pp
 Modules can be spawned by 
 .Nm 
 at any time during the X session by use of the
 .Sx Module
 command. Modules can exist for the duration of the X session, or can 
-perform a single task and exit. If the module is still active when 
+perform a single task and exit.
+If the module is still active when 
 .Nm 
 is told to quit, then 
 .Nm 
@@ -42,19 +43,20 @@ closes the communication pipes and waits to receive a SIGCHLD from the
 module, indicating that it has detected the pipe closure and has exited. 
 If modules fail to detect the pipe closure 
 .Nm 
-exits after approximately 30 seconds anyway. The number of simultaneously 
-executing modules is limited by the operating system's maximum number of 
-simultaneously open files, usually between 60 and 256.
+exits after approximately 30 seconds anyway.
+The number of simultaneously executing modules is limited by the operating
+system's maximum number of simultaneously open files, usually between 60
+and 256.
 .Pp
 Modules simply transmit commands to the 
 .Nm 
 
 .Nm 
-command engine. Commands are formatted just as in the case of a mouse 
-binding in the
+command engine.
+Commands are formatted just as in the case of a mouse binding in the
 .Pa config
-setup file. Certain auxiliary information is also transmitted, as in the 
-sample module
+setup file.
+Certain auxiliary information is also transmitted, as in the sample module
 .Sx FvwmButtons
 \.
 .Pp

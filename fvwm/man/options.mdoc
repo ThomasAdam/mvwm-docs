@@ -39,7 +39,8 @@ instead of
 (or 
 .Sx Read
 .Em .fvwm2rc
-as its initialization command. (Note that up to 10 
+as its initialization command.
+(Note that up to 10 
 .Sy -f 
 and 
 .Sy -c
@@ -47,7 +48,8 @@ parameters can be
 given, and they are executed in the order specified.)
 .Pp
 Any module started by command line arguments is assumed to be a module that
-sends back config commands. All command line modules have to quit before 
+sends back config commands.
+All command line modules have to quit before 
 .Nm
 proceeds on to the StartFunction and setting border decorations and styles.
 There is a potential deadlock if you start a module other than 
@@ -99,7 +101,8 @@ to read
 .Em config-file
 instead of
 .Pa ~/.fvwm/config
-as its initialization file. This is equivalent to -c  
+as its initialization file.
+This is equivalent to -c  
 .Sx Read 
 .Em config-file
 .Pp
@@ -112,8 +115,8 @@ A short usage description is printed.
 .\"
 .\" BEGIN OPTION -r 
 .It Fl -r | --replace
-Try to take over from a previously running wm. This does not work unless 
-the other wm is ICCCM2 2.0 compliant.
+Try to take over from a previously running wm.
+This does not work unless the other wm is ICCCM2 2.0 compliant.
 .\" END OPTION -r
 .\"
 .\" BEGIN OPTION -F 
@@ -134,7 +137,8 @@ environment variable or provided through the
 .Sy -d 
 option. The optional argument
 .Em screen_num
-should be positive or null and override the screen number. Normally,
+should be positive or null and override the screen number.
+Normally,
 .Nm
 attempts to start up on all screens of a multi-screen display.
 .\" END OPTION -s 
@@ -172,7 +176,8 @@ to use
 .Em id
 as the visual id for the window borders and menus.
 .Em id
-can be specified as N for decimal or 0xN for hexadecimal. See man page of 
+can be specified as N for decimal or 0xN for hexadecimal.
+See man page of 
 .Xr xdpyinfo 
 for a list of supported visuals.
 .\" END OPTION -I
@@ -189,28 +194,30 @@ In fact,
 (and all the modules) uses a palette with at most 
 .Em limit
 colors. This option is only useful with screens that display 256 colors (or
-less) with a dynamic visual (PseudoColor, GrayScale or DirectColor). The 
-default depends on your X server and how you run 
+less) with a dynamic visual (PseudoColor, GrayScale or DirectColor).
+The default depends on your X server and how you run 
 .Nm
 \. In most cases this default is 
 reasonable. The 
 .Sy -l
-option should be used only if you encounter problems with colors. By 
-default, 
+option should be used only if you encounter problems with colors.
+By default, 
 .Nm
-tries to detect large pre-allocated palettes. If such a palette is detected
+tries to detect large pre-allocated palettes.
+If such a palette is detected
 .Nm
 uses it and a priori the
 .Sy -l
-must not be used. Moreover, in this case the 
+must not be used.
+Moreover, in this case the 
 .Sy -A
 and
 .Sy -S
 options are forced. Note that XFree-4.2 pre-allocates 244 colors (if you 
-use a driver with Render support) leaving only a few free colors. This may 
-lead to some color problems (and nothing can be done). XFree-4.3 or better 
-pre-allocate only 85 colors. If no pre-allocated palette is auto detected 
-the defaults are as follow:
+use a driver with Render support) leaving only a few free colors.
+This may lead to some color problems (and nothing can be done).
+XFree-4.3 or better pre-allocate only 85 colors.
+If no pre-allocated palette is auto detected the defaults are as follow:
 .Pp
 .\" BEGIN LIST OF DISPLAY DEPTHS
 .Bl -inset
@@ -239,8 +246,8 @@ DirectColor: 10 (2x2x2 color cube + 2 grey)
 .\" END LIST OF DISPLAY DEPTHS
 .El 
 .Pp
-These defaults may change before version 2.6. Note that if you use a 
-private color map (i.e.,
+These defaults may change before version 2.6.
+Note that if you use a private color map (i.e.,
 .Nm
 is started with the 
 .Sy -C
@@ -248,11 +255,12 @@ or the
 .Sy -I
 options), then other defaults are used.
 .Pp
-Now what to do if you encounter problems with colors? The first thing to do
-is to check if you really cannot run your X server with depth 15, 16 or
-better. Check your X server documentation. Note that some hardware can 
-support two different depths on the same screen (typically depth 8 and 
-depth 24). If depth 8 is the default, you can force
+Now what to do if you encounter problems with colors?
+The first thing to do is to check if you really cannot run your X server
+with depth 15, 16 or better.
+Check your X server documentation. Note that some hardware can support two
+different depths on the same screen (typically depth 8 and depth 24).
+If depth 8 is the default, you can force
 .Nm
 to use the best depth by using the
 .Sy -C
@@ -261,17 +269,20 @@ option with
 as argument. So now we assume that you are forced to run in depth 8 with a 
 dynamic visual because your hardware/driver cannot do better or because you
 need to use an application which needs to run under this mode (e.g., 
-because this application needs read-write colors). What it should be 
-understand is that you have only 256 colors and that all the applications 
-which use the default color map must share these colors. The main problem 
-is that there are applications which use a lot or even all the colors. If 
-you use such application you may have no more free colors and some 
+because this application needs read-write colors).
+What it should be understand is that you have only 256 colors and that all
+the applications which use the default color map must share these colors.
+The main problem is that there are applications which use a lot or even all
+the colors.
+If you use such application you may have no more free colors and some
 applications (which used only a few colors) may fail to start or are 
-unusable. There are three things that can be done (and
+unusable.
+There are three things that can be done (and
 .Nm
 does not really play a particular role, all applications are concerned). 
 The first is to run the applications which waste your (default) color map 
-with a private color map. For example, run netscape with the 
+with a private color map.
+For example, run netscape with the 
 .Sy -install 
 option, run
 .Tn KDE
@@ -286,37 +297,47 @@ option for
 \. The disadvantage of this method is that it is visually disturbing (see
 the
 .Sx ColormapFocus
-command for a better control of the color maps switching). The second 
-method is to limit the number of colors that the applications use. Again, 
-some applications have options to specify a given color limit. With 
+command for a better control of the color maps switching).
+The second method is to limit the number of colors that the applications
+use.
+Again, some applications have options to specify a given color limit.
+With 
 .Nm 
 you may try various values, 61 (a special "visual" palette), 56 (a 4x4x3 
 color cube plus 6 grey), 29 (a 3x3x3 color cube plus 2 grey), 10 or 9. 
 Also, you may use the
 .Sy -L
-option. However, limiting the number of colors is not the definitive 
-solution. The definitive solution is to try cause applications which use a 
-lot of colors use the same colors. This is a difficult task as there are no
-formal standards for this goal. However, some toolkits as Qt and GTK use 
-color cubes as palettes. So, the idea is to configure your 
-applications/toolkits to all use the same color cube. Moreover, you can use
-the colors in this color cube in your X resources configuration files 
-and/or as arguments to colors options. 
+option.
+However, limiting the number of colors is not the definitive 
+solution.
+The definitive solution is to try cause applications which use a lot of
+colors use the same colors.
+This is a difficult task as there are no formal
+standards for this goal.
+However, some toolkits as Qt and GTK use color cubes as palettes.
+So, the idea is to configure your applications/toolkits to all use the same
+color cube.
+Moreover, you can use the colors in this color cube in your X resources
+configuration files and/or as arguments to colors options. 
 .Pp
 So, the idea is to configure your applications/toolkits to all use the same
-color cube. Moreover, you can use the colors in this color cube in your X 
-resources configuration files and/or as arguments to colors options. Fvwm 
-can use any color cube of the form RxGxB with 2 <= R <= 6, R = G, R-1 =< B 
-<= R and B >= 2. To get an RxGxB color cube give an argument to 
+color cube.
+Moreover, you can use the colors in this color cube in your X resources
+configuration files and/or as arguments to colors options.
+Fvwm can use any color cube of the form
+RxGxB with 2 <= R <= 6, R = G, R-1 =< B <= R and B >= 2.
+To get an RxGxB color cube give an argument to 
 .Sy -l 
 an integer c >= R*G*B and < (R+1)*(G+1)*B if B=R and < R*G*(B+1) if B < R 
-(and different from 61). If c > R*G*B, then some grey may be added to the 
-color cube. You can use the
+(and different from 61).
+If c > R*G*B, then some grey may be added to the color cube.
+You can use the
 .Sx PrintInfo
 .Em Colors 1
 command to get information on your 
 .Nm
-colors setting. In particular, this  command prints the palette used by
+colors setting.
+In particular, this  command prints the palette used by
 .Nm
 in rgb format (the last integer gives the number of times 
 .Nm
@@ -328,8 +349,8 @@ has allocated the colors).
 If the screen displays 256 colors (or less) and has a dynamic visual, 
 causes 
 .Nm
-to use its palette for all the colors. By default, the palette is used only
-for images and gradients.
+to use its palette for all the colors.
+By default, the palette is used only for images and gradients.
 .Pp
 .\" END OPTION -L
 .\"
@@ -339,13 +360,15 @@ If the screen displays 256 colors (or less) and has a dynamic visual, this
 option causes 
 .Nm
 to use a palette designed for limiting the "visual" color distance between
-the points of the palette. Moreover, for better color sharing, if possible
-colors with a name in the X rgb data base are used for defining the colors 
-(with the hope that applications and images prefer to use named colors). If
-the
+the points of the palette.
+Moreover, for better color sharing, if possible colors with a name in the X
+rgb data base are used for defining the colors (with the hope that
+applications and images prefer to use named colors).
+If the
 .Sy -l
-option is not used this palette has 61 colors. This palette is also 
-automatically selected if 61 or 9 is used as argument to the
+option is not used this palette has 61 colors.
+This palette is also automatically selected if 61 or 9 is used as argument
+to the
 .Sy -l
 option.
 .\" END OPTION -P
@@ -356,7 +379,8 @@ If the screen displays 256 colors (or less) and has a dynamic visual this
 option causes 
 .Nm 
 to allocate all the colors of its palette at start up for reserving these 
-colors for future use. This option forces the
+colors for future use.
+This option forces the
 .Sy --static-palette
 option. By default,
 .Nm
@@ -371,8 +395,8 @@ option causes
 to never free the colors in its palette. By default, when
 .Nm
 does not need a color any more it frees this color so that a new color can 
-be used. This option may speed up image loading and save a few bits of 
-memory.
+be used.
+This option may speed up image loading and save a few bits of memory.
 .\" END OPTION -S
 .\" 
 .\" BEGIN OPTION --blackout 
@@ -384,13 +408,15 @@ to never free the colors in its palette. By default, when
 .Nm
 does 
 not need a color any more it frees this color so that a new color can be 
-used. This option may speed up image loading and save a few bits of memory.
+used.
+This option may speed up image loading and save a few bits of memory.
 .\" END OPTION --blackout
 .\" 
 .\" BEGIN OPTION --debug-stack-ring 
 .It Fl --debug-stack-ring
-Enables stack ring debugging. This option is only intended for internal 
-debugging and should only be used by developers.
+Enables stack ring debugging.
+This option is only intended for internal debugging and should only be used
+by developers.
 .\" END OPTION --debug-stack-ring
 .\" 
 .\"END OPTIONS LIST

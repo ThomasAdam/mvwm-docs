@@ -17,7 +17,8 @@
 During initialization, 
 .Nm
 searches for a configuration file which describes key and button bindings,
-and many other things. The format of these files is described later. 
+and many other things.
+The format of these files is described later. 
 .Nm
 first searches for configuration files using the command
 .\" BEGIN CODEBLOCK
@@ -34,9 +35,9 @@ and
 directories, as described in
 .Sx Read
 . 
-If this fails more files are queried for backward compatibility. Here is 
-the complete list of all file locations queried in the default installation
-(only the first found file is used):
+If this fails more files are queried for backward compatibility.
+Here is the complete list of all file locations queried in the default
+installation (only the first found file is used):
 .Pp
 .\" BEGIN PRIMARY LIST OF PATHS
 .Bl -inset -compact
@@ -66,8 +67,8 @@ keys on the root window bring up menus and forms that can create a starting
 configuration file.
 .Pp
 .Nm 
-sets two environment variables which are inherited by its children. These 
-are
+sets two environment variables which are inherited by its children.
+These are
 .Ev $DISPLAY
 which describes the display on which 
 .Nm
@@ -106,8 +107,8 @@ Module FvwmXxx
 into your
 .Pa config
 ,
-but it is not recommended; do this only if you know what you are doing. It 
-is usually important to start applications or modules after the entire 
+but it is not recommended; do this only if you know what you are doing.
+It is usually important to start applications or modules after the entire 
 config is read, because it contains styles or module configurations which 
 can affect window appearance and functionality.
 .Pp
@@ -136,7 +137,8 @@ and
 .Sy RestartFunction
 ,
 which are executed during initialization and restarts (respectively) just 
-after StartFunction. These functions may be customized in a user's
+after StartFunction.
+These functions may be customized in a user's
 .Pa config
 file using the
 .Sx AddToFunc
@@ -149,8 +151,8 @@ like to have started by
 has also a special exit function:
 .Sy ExitFunction
 ,
-executed when exiting or restarting before actually quitting. It could be 
-used to explicitly kill modules, etc.
+executed when exiting or restarting before actually quitting.
+It could be used to explicitly kill modules, etc.
 .Pp
 If 
 .Nm
@@ -162,11 +164,12 @@ are executed instead of InitFunction and RestartFunction.
 This helps to define the user's
 .Pa config
 file to be good for both running under a session manager and
-without it. Generally it is a bad idea to start xterms or other
-applications in 
+without it.
+Generally it is a bad idea to start xterms or other applications in 
 .Sy "Session*"
 functions. Also someone can decide to start different modules while running
-under a session manager ornot. For the similar purposes
+under a session manager or not.
+For the similar purposes
 .Sy SessionExitFunction
 is used instead of 
 .Sy ExitFunction.
@@ -200,8 +203,8 @@ AddToFunc SessionRestartFunction
 .\" END CODEBLOCK
 .Ed
 .Pp
-You do not need to define all special functions if some are empty. Also 
-note, all these special functions may be emulated now using
+You do not need to define all special functions if some are empty.
+Also note, all these special functions may be emulated now using
 .Sy StartFunction
 and 
 .Sy ExitFunction

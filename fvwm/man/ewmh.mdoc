@@ -17,18 +17,20 @@ Fvwm attempts to respect the extended window manager hints (ewmh or
 .Sy EWMH 
 for short) specification: 
 http://www.freedesktop.org/wiki/Standards_2fwm_2dspec
-and some extensions of this specification. This allows fvwm to work with
+and some extensions of this specification.
+This allows fvwm to work with
 .Sy KDE
 version >= 2,
 .Sy GNOME
 version 2 and other applications which respect this specification (any 
 application based on
 .Sy GTK+
-version 2). Applications which respect this specification are called ewmh 
-compliant applications.
+version 2).
+Applications which respect this specification are called ewmh compliant
+applications.
 .Pp
-This support is configurable with styles and commands. These styles and 
-commands have
+This support is configurable with styles and commands.
+These styles and commands have
 .Sy EWMH
 as the prefix (so you can find them easily in this man page).
 .Pp
@@ -40,15 +42,16 @@ There is a new Context 'D' for the
 .Sx Mouse
 and
 .Sx Stroke
-commands. This context is for desktop applications (such as kdesktop and 
-Nautilus desktop).
+commands.
+This context is for desktop applications (such as kdesktop and Nautilus
+desktop).
 .Pp
 When a compliant taskbar asks fvwm to activate a window (typically when you
-click on a button which represents a window in such a taskbar), then fvwm 
+click on a button which represents a window in such a taskbar), then fvwm
 calls the complex function
 .Sy EWMHActivateWindowFunc
-which by default is Iconify Off, Focus and Raise. You can redefine this 
-function. For example:
+which by default is Iconify Off, Focus and Raise.
+You can redefine this function. For example:
 .\" BEGIN CODEBLOCK
 .Bd -literal -offset indent -compact
 DestroyFunc EWMHActivateWindowFunc
@@ -62,18 +65,22 @@ additionally warps the pointer to the center of the window.
 .Pp
 The
 .Sy EWMH
-specification introduces the notion of Working Area. Without ewmh support 
-the Working Area is the full visible screen (or all your screens if you 
-have a multi head setup and you use Xinerama). However, compliant 
-applications (such as a panel) can ask to reserve space at the edge of the
-screen. If this is the case, the Working Area is your full visible screen 
-minus these reserved spaces. If a panel can be hidden by clicking on a 
-button the Working Area does not change (as you can unhide the panel at any
-time), but the Dynamic Working Area is updated: the space reserved by the 
-panel is removed (and added again if you pop up the panel). The Dynamic 
-Working Area may be used when fvwm places or maximizes a window. To know if
-an application reserves space you can type "xprop | grep _NET_WM_STRUT" in
-a terminal and select the application. If four numbers appear then these 
-numbers define the reserved space as explained in the
+specification introduces the notion of Working Area. Without ewmh support
+the Working Area is the full visible screen (or all your screens if you
+have a multi head setup and you use Xinerama).
+However, compliant applications (such as a panel) can ask to reserve space
+at the edge of the screen.
+If this is the case, the Working Area is your full visible screen  minus
+these reserved spaces.
+If a panel can be hidden by clicking on a button the Working Area does not
+change (as you can unhide the panel at any time), but the Dynamic Working
+Area is updated: the space reserved by the panel is removed (and added again
+if you pop up the panel).
+The Dynamic  Working Area may be used when fvwm places or maximizes a
+window.
+To know if an application reserves space you can type "xprop | grep
+_NET_WM_STRUT" in a terminal and select the application.
+If four numbers appear then these numbers define the reserved space as
+explained in the
 .Sx EwmhBaseStruts
 command.
