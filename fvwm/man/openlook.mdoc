@@ -1,0 +1,48 @@
+.\"
+.\" Please keep file format as follows:
+.\" -- Lines should be no longer than 75 characters
+.\" -- All nested structures should be commented at their beginning and end
+.\" -- All codeblocks should be commented at their beginning and end
+.\" -- If the file contains a lot of formatting, keep paragraphs or other 
+.\"    logical parts separated by a commented out line and/or comment their
+.\"    beginnings and ends
+.\" 
+.\"  For vim users:
+.\" 
+.\"  au BufNewFile,BufRead *.mdoc set filetype=groff
+.\"  au BufNewFile,BufRead *.mdoc match ErrorMsg '\%>75v.\+'
+.\"
+.Sh Open Look and XView Compatibility
+Fvwm supports all the Open Look decoration hints (except pushpins). Should
+you use any such application, please add the following line to your config:
+.\" BEGIN CODEBLOCK
+.Bd -literal -offset indent -compact
+Style * OLDecor
+.\" END CODEBLOCK
+.Ed
+.Pp
+Most (perhaps all) Open Look applications have a strange notion of 
+keyboard focus handling. Although a lot of work went into fvwm to work well
+with these, you may still encounter problems. It is recommended to use the 
+.Sx NeverFocus
+focus policy and the 
+.Sx Lenience
+style for all such applications (the windows still get the
+focus):
+.\" BEGIN CODEBLOCK
+.Bd -literal -offset indent -compact
+Style <application name> NeverFocus, Lenience
+.\" END CODEBLOCK
+.Ed
+.Pp
+But in case you can not live with that focus policy, you can try using one
+of the other focus policies in combination with the
+.Sx Lenience
+\:
+.\" BEGIN CODEBLOCK
+.Bd -literal -offset indent -compact
+Style <application name> MouseFocus, Lenience
+Style <application name> SloppyFocus, Lenience
+Style <application name> ClickToFocus, Lenience
+.\" END CODEBLOCK
+.Ed
